@@ -1,55 +1,40 @@
-import { Box, Container, CssBaseline, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Container, CssBaseline } from "@mui/material";
 import NavBar from "./NavBar";
-import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { useActivities } from "../../lib/hooks/useActivities";
+import { Outlet } from "react-router";
 
 function App() {
   //const [Activities, setActivities] = useState<Activity[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<
-    Activity | undefined
-  >(undefined);
-  const [editMode, setEditMode] = useState(false);
-  const { activities, isPending } = useActivities();
+  // const [selectedActivity, setSelectedActivity] = useState<
+  //   Activity | undefined
+  // >(undefined);
+  // const [editMode, setEditMode] = useState(false);
 
-  const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities!.find((x) => x.id === id));
-    console.log(id);
-  };
+  // const handleSelectActivity = (id: string) => {
+  //   setSelectedActivity(activities!.find((x) => x.id === id));
+  //   console.log(id);
+  // };
 
-  const handleCancelSelectActivity = () => {
-    setSelectedActivity(undefined);
-  };
+  // const handleCancelSelectActivity = () => {
+  //   setSelectedActivity(undefined);
+  // };
 
-  const handleOpenForm = (id?: string) => {
-    if (id) handleSelectActivity(id);
-    else handleCancelSelectActivity();
-    setEditMode(true);
-  };
+  // const handleOpenForm = (id?: string) => {
+  //   if (id) handleSelectActivity(id);
+  //   else handleCancelSelectActivity();
+  //   setEditMode(true);
+  // };
 
-  const handleFormClose = () => {
-    setEditMode(false);
-  };
+  // const handleFormClose = () => {
+  //   setEditMode(false);
+  // };
 
   return (
     <>
       <Box sx={{ bgcolor: "#eeeeee" }}>
         <CssBaseline />
-        <NavBar openForm={handleOpenForm} />
+        <NavBar />
         <Container maxWidth="xl" sx={{ mt: 3 }}>
-          {!activities || isPending ? (
-            <Typography>Loading...</Typography>
-          ) : (
-            <ActivityDashboard
-              activities={activities}
-              selectActivity={handleSelectActivity}
-              cancelSelectActivity={handleCancelSelectActivity}
-              selectedActivity={selectedActivity}
-              editMode={editMode}
-              openForm={handleOpenForm}
-              closeForm={handleFormClose}
-            />
-          )}
+          <Outlet />
         </Container>
       </Box>
     </>
